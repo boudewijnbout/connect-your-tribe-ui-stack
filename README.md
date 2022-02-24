@@ -1,20 +1,54 @@
-> _Fork_ deze leertaak en ga aan de slag. Onderstaande outline ga je gedurende deze taak in jouw eigen GitHub omgeving uitwerken. De instructie vind je in: [docs/INSTRUCTIONS.md](docs/INSTRUCTIONS.md)
+# Visitekaartje V2 UI Stack
 
-# Titel
-<!-- Geef je project een titel en schrijf in één zin wat het is -->
+## Wireflow & Breakdown
 
-## Wireflow
-<!-- Toon de wireflow -->
+<img width="500" src="https://github.com/boudewijnbout/connect-your-tribe-fdnd-visitekaartje/blob/main/assets/images/20220224_151040.jpg">
 
-## Breakdown
-<!-- Toon de breakdown schets -->
+## Code
 
-## Code 
-<!-- Leg de code uit die je gebruikt om de verschillende states van de UI-Stack te tonen -->
+HTML:
 
+```html
+<div class="preloader-wrapper">
+  <span class="preloader"></span>
+</div>
+```
 
-## Licentie
+JavaScript:
+```javascript
+const memberId = 18;
+const apiUrl = "https://tribe.api.fdnd.nl/v1/member";
 
-![GNU GPL V3](https://www.gnu.org/graphics/gplv3-127x51.png)
+// Personal Card
+const nameTitle = document.querySelector("#name-title");
+const bio = document.querySelector("article");
+const bioText = document.querySelector("article p");
+const waveIcon = document.querySelector("article p span");
 
-This work is licensed under [GNU GPLv3](./LICENSE).
+// Preloader
+const preLoaderWrapper = document.querySelector(".preloader-wrapper");
+
+// Fetch API data
+fetch(apiUrl)
+  .then((res) => {
+
+    if (res.status >= 200 && res.status <= 299) {
+      // preLoaderWrapper.classList.add("hide");
+      return res.json();
+    } else {
+      preLoaderWrapper.classList.add("hide");
+    }
+  })
+
+  // Filter data to specific person
+  .then((res) => {
+    const boudewijnData = res.data.find((student) => student.memberId === 18);
+
+    // Put data into HTML
+
+    // Title
+    nameTitle.textContent = `${boudewijnData.name} ${boudewijnData.surname}`;
+
+    // Bio
+    bioText.textContent = boudewijnData.bio;
+  })
