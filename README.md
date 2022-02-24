@@ -33,7 +33,7 @@ fetch(apiUrl)
   .then((res) => {
 
     if (res.status >= 200 && res.status <= 299) {
-      // preLoaderWrapper.classList.add("hide");
+      preLoaderWrapper.classList.add("hide");
       return res.json();
     } else {
       preLoaderWrapper.classList.add("hide");
